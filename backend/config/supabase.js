@@ -1,5 +1,8 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+import pg from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const { Pool } = pg;
 
 const pool = new Pool({
     connectionString: process.env.SUPABASE_URL,
@@ -7,6 +10,6 @@ const pool = new Pool({
 
 pool.connect()
     .then(() => console.log('Conexión a Supabase exitosa'))
-    .catch((err) => console.log('Error al conectar a Supabase:', err.stack));
+    .catch(err => console.error('Error:', err.stack));
 
-module.exports = pool;
+export default pool;
