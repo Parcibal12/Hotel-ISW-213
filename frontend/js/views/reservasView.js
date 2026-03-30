@@ -1,4 +1,4 @@
-export const generarHtmlReservas = (huespedes, tiposHabitacion) => {
+export const generarHtmlReservas = (huespedes, tiposHabitacion, reservas = []) => {
     const opcionesHuespedes = huespedes.map(h =>
         `<option value="${h.id}">${h.nombre_completo} (${h.documento_identidad})</option>`
     ).join('');
@@ -8,6 +8,18 @@ export const generarHtmlReservas = (huespedes, tiposHabitacion) => {
             ${t.nombre}
         </option>`
     ).join('');
+
+    const filasReservas = reservas.length > 0
+        ? reservas.map(r => `
+            <tr>
+                <td><p class="text-sm"><strong>${r.huesped}</strong></p></td>
+                <td><p class="text-sm">Hab. ${r.habitacion}</p></td>
+                <td><p class="text-sm">${new Date(r.fecha_ingreso).toLocaleDateString()}</p></td>
+                <td><p class="text-sm">${new Date(r.fecha_salida).toLocaleDateString()}</p></td>
+                <td><span class="status-btn ${r.estado === 'Pendiente' ? 'warning' : 'primary'}-btn">${r.estado}</span></td>
+            </tr>
+        `).join('')
+        : '<tr><td colspan="5" class="text-center text-muted py-4">No hay reservas activas ni futuras registradas en el sistema.</td></tr>';
 
     return `
         <div class="title-wrapper pt-30">
@@ -89,6 +101,26 @@ export const generarHtmlReservas = (huespedes, tiposHabitacion) => {
                     <div id="info-habitacion">
                         </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="card-style mt-30 mb-30">
+            <h6 class="mb-25">Reservas Activas y Futuras</h6>
+            <div class="table-wrapper table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><h6>Huésped</h6></th>
+                            <th><h6>Habitación</h6></th>
+                            <th><h6>Ingreso</h6></th>
+                            <th><h6>Salida</h6></th>
+                            <th><h6>Estado</h6></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filasReservas}
+                    </tbody>
+                </table>
             </div>
         </div>
     `;

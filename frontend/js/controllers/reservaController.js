@@ -1,15 +1,16 @@
 import { getHuespedes } from '../api/huespedApi.js';
 import { getHabitacionesPorTipo, getTiposHabitacion } from '../api/habitacionApi.js';
-import { crearReserva } from '../api/reservaApi.js';
+import { crearReserva, getReservas } from '../api/reservaApi.js';
 import { generarHtmlReservas } from '../views/reservasView.js';
 
 export const cargarControladorReservas = async (contenedor) => {
-    const [huespedes, tiposHabitacion] = await Promise.all([
+    const [huespedes, tiposHabitacion, reservas] = await Promise.all([
         getHuespedes(),
-        getTiposHabitacion()
+        getTiposHabitacion(),
+        getReservas()
     ]);
 
-    contenedor.innerHTML = generarHtmlReservas(huespedes, tiposHabitacion);
+    contenedor.innerHTML = generarHtmlReservas(huespedes, tiposHabitacion, reservas);
 
     const hoy = new Date().toISOString().split('T')[0];
 
@@ -74,9 +75,9 @@ export const cargarControladorReservas = async (contenedor) => {
         try {
             await crearReserva(nuevaReserva);
             Swal.fire('Éxito', 'Reserva registrada correctamente', 'success');
-            form.reset();
-            tarjetaDetalles.style.display = 'none';
-            selectHabitacion.disabled = true;
+
+            await cargarControladorReservas(contenedor);
+
         } catch (error) {
             Swal.fire('No se pudo reservar', error.message, 'error');
         }

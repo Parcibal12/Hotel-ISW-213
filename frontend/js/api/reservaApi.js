@@ -11,3 +11,15 @@ export const crearReserva = async (datos) => {
     if (!respuesta.ok) throw new Error(data.error || 'Error al procesar la reserva');
     return data;
 };
+
+
+export const getReservas = async () => {
+    try {
+        const respuesta = await fetch(`${BASE_URL}/reservas`);
+        if (!respuesta.ok) return [];
+        return await respuesta.json();
+    } catch (error) {
+        console.error("Error al obtener reservas:", error);
+        return [];
+    }
+};

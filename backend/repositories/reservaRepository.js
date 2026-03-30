@@ -29,10 +29,17 @@ export const crearReserva = async (nuevaReserva) => {
 
 
 export const obtenerTodasLasReservas = async () => {
-    const query = 'SELECT * FROM public.reserva ORDER BY id DESC';
+    const query = `
+        SELECT r.id, h.nombre_completo AS huesped, hab.numero_habitacion AS habitacion, 
+               r.fecha_ingreso, r.fecha_salida, r.estado, r.cantidad_personas
+        FROM public.reserva r
+        JOIN public.huesped h ON r.huesped_id = h.id
+        JOIN public.habitacion hab ON r.habitacion_id = hab.id
+        ORDER BY r.fecha_ingreso ASC;
+    `;
 
     const resultado = await pool.query(query);
-    return resultado.rows;
+    return resultado.rows || [];
 };
 
 
