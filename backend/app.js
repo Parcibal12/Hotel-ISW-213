@@ -5,7 +5,7 @@ import cors from 'cors';
 import pool from './config/supabase.js';
 import servicioRoutes from './routes/servicioRoutes.js';
 import huespedRoutes from './routes/huespuedRoutes.js';
-import reservaRoutes from './routes/reservarRoutes.js';
+import reservaRoutes from './routes/reservaRoutes.js';
 import habitacionRoutes from './routes/habitacionRoutes.js';
 import checkinRoutes from './routes/checkinRoutes.js';
 import servicioHotelRoutes from './routes/servicioHotelRoutes.js';
