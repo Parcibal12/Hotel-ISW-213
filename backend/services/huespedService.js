@@ -14,4 +14,17 @@ export const registrarHuesped = async (datosHuesped) => {
 
     const nuevoHuesped = await crearHuesped(datosHuesped);
     return nuevoHuesped;
+};
+
+export const obtenerHuespedPorDocumento = async (documento_identidad) => {
+    if (!documento_identidad) {
+        throw new Error('Falta documento');
+    }
+
+    const huesped = await buscarPorDocumento(documento_identidad);
+    if (!huesped) {
+        throw new Error('Huesped no encontrado');
+    }
+
+    return huesped;
 }
