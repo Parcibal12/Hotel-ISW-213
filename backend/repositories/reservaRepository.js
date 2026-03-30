@@ -51,3 +51,31 @@ export const actualizarEstadoReserva = async (id, nuevoEstado) => {
     }
     return null;
 };
+
+
+
+
+export const verificarDisponibilidad = async (habitacion_id, fecha_ingreso, fecha_salida) => {
+    const query = `
+        SELECT id FROM public.reserva 
+        WHERE habitacion_id = $1 
+        AND estado NOT IN ('Cancelada', 'Finalizada')
+        AND (fecha_ingreso < $3 AND fecha_salida > $2);
+    `;
+    const resultado = await pool.query(query, [habitacion_id, fecha_ingreso, fecha_salida]);
+    return resultado.rows.length > 0;
+};
+
+export const obtenerCapacidadHabitacion = async (habitacion_id) => {
+    const query = `
+        SELECT th.capacidad 
+        FROM public.habitacion h
+        JOIN public.tipo_habitacion th ON h.tipo_habitacion_id = th.id
+        WHERE h.id = $1;
+    `;
+    const resultado = await pool.query(query, [habitacion_id]);
+    if (resultado && resultado.rows && resultado.rows.length > 0) {
+        return resultado.rows[0].capacidad;
+    }
+    return null;
+};

@@ -7,18 +7,23 @@ export const createReserva = async (req, res) => {
 
     } catch (error) {
         if (error.message === 'Todos los campos son obligatorios') {
-            return res.status(400).json({ error: 'Faltan datos obligatorios (huésped, habitación o fechas).' });
+            return res.status(400).json({ error: 'Faltan datos obligatorios (huésped, habitación o fechas)' });
         }
-
         if (error.message === 'Fechas inválidas') {
             return res.status(400).json({ error: 'La fecha de salida debe ser posterior a la fecha de ingreso' });
-
-
+        }
+        if (error.message === 'Habitación no existe') {
+            return res.status(404).json({ error: 'La habitación solicitada no existe en el sistema' });
+        }
+        if (error.message === 'Capacidad excedida') {
+            return res.status(400).json({ error: 'La cantidad de personas supera la capacidad máxima de la habitación' });
+        }
+        if (error.message === 'Habitación ocupada en esas fechas') {
+            return res.status(409).json({ error: 'La habitación ya se encuentra reservada en las fechas seleccionadas' });
         }
 
         console.error('Error al crear reserva: ', error);
         res.status(500).json({ error: 'Error interno del servidor' });
-
     }
 };
 
