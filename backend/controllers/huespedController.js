@@ -1,4 +1,4 @@
-import { registrarHuesped, obtenerHuespedPorDocumento } from "../services/huespedService.js";
+import { registrarHuesped, obtenerHuespedPorDocumento, listarHuespedes } from "../services/huespedService.js";
 
 export const createHuesped = async (req, res) => {
     const datosCliente = req.body;
@@ -46,4 +46,15 @@ export const getHuesped = async (req, res) => {
         console.error('Error al buscar huésped:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
     }
-}
+};
+
+
+export const getHuespedes = async (req, res) => {
+    try {
+        const huespedes = await listarHuespedes();
+        res.status(200).json(huespedes);
+    } catch (error) {
+        console.error('Error al obtener huéspedes:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};

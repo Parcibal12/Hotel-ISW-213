@@ -29,3 +29,9 @@ export const crearHuesped = async (nuevoHuesped) => {
 
     return nuevoHuesped;
 };
+
+export const obtenerHuespedes = async () => {
+    const query = `SELECT * FROM public.huesped ORDER BY id DESC;`;
+    const resultado = await pool.query(query);
+    return resultado.rows || [];
+};

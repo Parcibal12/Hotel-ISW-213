@@ -1,4 +1,4 @@
-import { buscarPorDocumento, crearHuesped } from "../repositories/huespedRepository.js";
+import { buscarPorDocumento, crearHuesped, obtenerHuespedes } from "../repositories/huespedRepository.js";
 
 export const registrarHuesped = async (datosHuesped) => {
     const { documento_identidad, nombre_completo, telefono, correo, tipo_documento_id } = datosHuesped;
@@ -27,4 +27,8 @@ export const obtenerHuespedPorDocumento = async (documento_identidad) => {
     }
 
     return huesped;
-}
+};
+
+export const listarHuespedes = async () => {
+    return await obtenerHuespedes();
+};
