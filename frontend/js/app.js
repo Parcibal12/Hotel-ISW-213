@@ -1,11 +1,11 @@
-import { generarHtmlHuespedes } from './views/huespedView.js';
-import { renderReservas } from './views/reservasView.js';
 import { cargarControladorHuespedes } from './controllers/huespedController.js';
+import { cargarControladorReservas } from './controllers/reservaController.js';
 
 const appDiv = document.getElementById('app');
 
 const routes = {
     '/huespedes': cargarControladorHuespedes,
+    '/reservas': cargarControladorReservas,
 };
 
 const router = async () => {
