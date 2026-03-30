@@ -13,7 +13,6 @@ export const crearHuesped = async (nuevoHuesped) => {
         VALUES ($1, $2, $3, $4, $5) RETURNING *;
     `;
 
-
     const valores = [
         nuevoHuesped.documento_identidad,
         nuevoHuesped.nombre_completo,
@@ -22,13 +21,11 @@ export const crearHuesped = async (nuevoHuesped) => {
         nuevoHuesped.tipo_documento_id
     ];
 
-    const { rows } = await pool.query(query, valores);
+    const resultado = await pool.query(query, valores);
 
-    return new HuespedModel(
-        rows[0].documento_identidad,
-        rows[0].nombre_completo,
-        rows[0].telefono,
-        rows[0].correo,
-        rows[0].tipo_documento_id
-    );
-}
+    if (resultado && resultado.rows && resultado.rows.length > 0) {
+        return resultado.rows[0];
+    }
+
+    return nuevoHuesped;
+};

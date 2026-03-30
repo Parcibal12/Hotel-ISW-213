@@ -1,4 +1,4 @@
-import { registrarReserva, listarReservas } from "../services/reservaServices.js";
+import { registrarReserva, listarReservas, cambiarEstadoReserva } from "../services/reservaServices.js";
 
 export const createReserva = async (req, res) => {
     try {
@@ -35,4 +35,24 @@ export const getReservas = async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
 
     }
-}
+};
+
+
+export const actualizarEstadoReserva = async (req, res) => {
+    const { id } = req.params;
+    const { estado } = req.body;
+
+    try {
+        const reserva = await cambiarEstadoReserva(id, estado);
+        res.status(200).json({ mensaje: 'Estado actualizado', reserva });
+    } catch (error) {
+        if (error.message === 'Estado inválido') {
+            return res.status(400).json({ error: 'El estado proporcionado no es válido' });
+        }
+        if (error.message === 'Reserva no encontrada') {
+            return res.status(404).json({ error: 'No se encontró la reserva' });
+        }
+        console.error('Error al actualizar estado:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};

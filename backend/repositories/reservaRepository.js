@@ -34,3 +34,20 @@ export const obtenerTodasLasReservas = async () => {
     const resultado = await pool.query(query);
     return resultado.rows;
 };
+
+
+
+export const actualizarEstadoReserva = async (id, nuevoEstado) => {
+    const query = `
+        UPDATE public.reserva 
+        SET estado = $1 
+        WHERE id = $2 
+        RETURNING *;
+    `;
+    const resultado = await pool.query(query, [nuevoEstado, id]);
+
+    if (resultado && resultado.rows && resultado.rows.length > 0) {
+        return resultado.rows[0];
+    }
+    return null;
+};

@@ -1,4 +1,4 @@
-import { crearReserva, obtenerTodasLasReservas } from "../repositories/reservaRepository.js";
+import { crearReserva, obtenerTodasLasReservas, actualizarEstadoReserva } from "../repositories/reservaRepository.js";
 
 export const registrarReserva = async (datosReserva) => {
     const { huesped_id, habitacion_id, fecha_ingreso, fecha_salida } = datosReserva;
@@ -28,3 +28,19 @@ export const listarReservas = async () => {
     return reservas;
 };
 
+
+export const cambiarEstadoReserva = async (id, nuevoEstado) => {
+    const estadosPermitidos = ['Pendiente', 'Confirmada', 'Cancelada', 'EnCurso', 'Finalizada'];
+
+    if (!estadosPermitidos.includes(nuevoEstado)) {
+        throw new Error('Estado inválido');
+    }
+
+    const reservaActualizada = await actualizarEstadoReserva(id, nuevoEstado);
+
+    if (!reservaActualizada) {
+        throw new Error('Reserva no encontrada');
+    }
+
+    return reservaActualizada;
+};
