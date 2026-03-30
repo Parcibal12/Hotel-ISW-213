@@ -5,6 +5,7 @@ import cors from 'cors';
 import pool from './config/supabase.js';
 import servicioRoutes from './routes/servicioRoutes.js';
 import huespedRoutes from './routes/huespuedRoutes.js';
+import reservaRoutes from './routes/reservarRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/servicios', servicioRoutes);
 app.use('/api/huespedes', huespedRoutes);
+app.use('/api/reservas', reservaRoutes);
 
 app.get('/', (req, res) => {
     res.json({ mensaje: 'Hotel API' });
