@@ -27,6 +27,12 @@ La persistencia de datos está estructurada en las siguientes tablas relacionale
 
 *Nota: Las capacidades de habitaciones y contactos de servicios son datos precargados para acotar el alcance del prototipo.*
 
+### Diagrama relacional
+
+A continuación, se presenta el diagrama de la base de datos de Supabase que sustenta la lógica del hotel:
+
+![Diagrama de Base de Datos Supabase](./docs/assets/supabase-schema-jisfolhhisfaenvuidid.png)
+
 ## Estructura del proyecto
 
 El código fuente está ordenado respetando la separación de capas:
