@@ -32,25 +32,38 @@ La persistencia de datos está estructurada en las siguientes tablas relacionale
 El código fuente está ordenado respetando la separación de capas:
 
 ```text
-/Hotel
+Hotel/
+├── .gitignore               # Archivos ignorados por el control de versiones
+├── README.md                # Documentación principal del proyecto
+├── package.json             # Dependencias y scripts globales del proyecto
+├── package-lock.json        # Árbol de versiones exactas de dependencias
 │
-├── /backend                 # API RESTful en Node.js
-│   ├── /config              # Conexión a Supabase (PostgreSQL)
-│   ├── /controllers         # Controladores (manejo de requests/responses)
-│   ├── /services            # Lógica de negocio (reglas, validaciones)
-│   ├── /repositories        # Consultas SQL puras
-│   ├── /routes              # Definición de endpoints REST
-│   └── app.js               # Archivo principal del servidor
+├── frontend/                # Lógica y presentación del cliente (Vanilla JS)
+│   ├── index.html           # Punto de entrada de la aplicación web
+│   ├── assets/              # Archivos estáticos de la plantilla PlainAdmin
+│   │   ├── css/             # Hojas de estilo
+│   │   ├── fonts/           # Tipografías
+│   │   ├── images/          # Recursos gráficos y logos
+│   │   ├── js/              # Scripts de terceros (Bootstrap, etc.)
+│   │   └── scss/            # Archivos fuente de estilos preprocesados
+│   └── js/                  # Lógica principal del Frontend
+│       ├── app.js           # Enrutador principal del Frontend
+│       ├── config.js        # Variables de entorno del cliente
+│       ├── api/             # Funciones fetch para consumir el Backend
+│       ├── controllers/     # Controladores del DOM e interacciones
+│       └── views/           # Template literals HTML (vistas)
 │
-├── /js                      # Lógica del Frontend (Vanilla JS)
-│   ├── /api                 # Funciones fetch para consumir el Backend
-│   ├── /controllers         # Controladores del DOM e interacciones
-│   ├── /views               # Template literals HTML (vistas)
-│   ├── app.js               # Enrutador principal del Frontend
-│   └── config.js            # Variables de entorno del cliente
-│
-├── /assets                  # Estilos (CSS, PlainAdmin), imágenes, fuentes
-└── index.html               # Punto de entrada de la aplicación web
+└── backend/                 # API RESTful en Node.js
+    ├── .env                 # Variables de entorno (conexión a Supabase)
+    ├── app.js               # Archivo principal y configuración del servidor
+    ├── package.json         # Dependencias específicas del backend
+    ├── package-lock.json    # Árbol de versiones exactas del backend
+    ├── config/              # Conexión a la base de datos Supabase (PostgreSQL)
+    ├── controllers/         # Controladores (manejo de requests/responses)
+    ├── models/              # Definición de estructuras/entidades de datos
+    ├── repositories/        # Consultas SQL puras
+    ├── routes/              # Definición de endpoints REST
+    └── services/            # Lógica de negocio (reglas, validaciones)
 ```
 
 ## Funcionalidades implementadas
