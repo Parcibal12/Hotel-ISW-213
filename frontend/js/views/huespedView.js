@@ -6,7 +6,7 @@ export const generarHtmlHuespedes = (huespedes) => {
             <td><p class="text-sm">${h.correo}</p></td>
             <td><p class="text-sm">${h.telefono}</p></td>
             <td>
-                <button class="main-btn info-btn btn-hover btn-sm btn-ver-huesped" data-id="${h.id}">
+                <button class="main-btn primary-btn btn-hover btn-sm btn-ver-huesped" data-id="${h.id}">
                     Ver Perfil
                 </button>
             </td>
@@ -55,13 +55,12 @@ export const generarHtmlHuespedes = (huespedes) => {
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>${filas.length > 0 ? filas : '<tr><td colspan="5" class="text-center">No hay huéspedes</td></tr>'}</tbody>
+                    <tbody>${filas.length > 0 ? filas : '<tr><td colspan="5" class="text-center text-muted">No hay huéspedes registrados</td></tr>'}</tbody>
                 </table>
             </div>
         </div>
     `;
 };
-
 
 export const generarHtmlDetalleHuesped = (huesped) => {
     return `

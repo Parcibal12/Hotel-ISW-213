@@ -26,7 +26,7 @@ export const generarHtmlServicios = (servicios = []) => {
                         <tr>
                             <th><h6>Servicio</h6></th>
                             <th><h6>Persona encargada</h6></th>
-                            <th><h6>Teléfono de Ccontacto</h6></th>
+                            <th><h6>Teléfono de contacto</h6></th>
                         </tr>
                     </thead>
                     <tbody>

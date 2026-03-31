@@ -1,4 +1,15 @@
 export const generarHtmlReservas = (huespedes, tiposHabitacion, reservas = []) => {
+
+    const obtenerClaseEstado = (estado) => {
+        switch (estado) {
+            case 'Pendiente': return 'warning-btn';
+            case 'EnCurso': return 'primary-btn';
+            case 'Cancelada': return 'danger-btn';
+            case 'Finalizada': return 'dark-btn';
+            default: return 'light-btn';
+        }
+    };
+
     const opcionesHuespedes = huespedes.map(h =>
         `<option value="${h.id}">${h.nombre_completo} (${h.documento_identidad})</option>`
     ).join('');
@@ -16,7 +27,7 @@ export const generarHtmlReservas = (huespedes, tiposHabitacion, reservas = []) =
                 <td><p class="text-sm">Hab. ${r.habitacion}</p></td>
                 <td><p class="text-sm">${new Date(r.fecha_ingreso).toLocaleDateString()}</p></td>
                 <td><p class="text-sm">${new Date(r.fecha_salida).toLocaleDateString()}</p></td>
-                <td><span class="status-btn ${r.estado === 'Pendiente' ? 'warning' : 'primary'}-btn">${r.estado}</span></td>
+                <td><span class="status-btn ${obtenerClaseEstado(r.estado)}">${r.estado}</span></td>
                 <td>
                     ${r.estado === 'Pendiente'
                 ? `<button class="main-btn success-btn btn-hover btn-sm btn-checkin" data-id="${r.id}">Check-In</button>`
