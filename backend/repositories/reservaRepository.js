@@ -19,7 +19,7 @@ export const crearReserva = async (nuevaReserva) => {
     const resultado = await pool.query(query, valores);
 
 
-    if (resultado && resultado.rows && resultado.rows.lenght > 0) {
+    if (resultado && resultado.rows && resultado.rows.length > 0) {
         return resultado.rows[0];
     }
     return nuevaReserva;
