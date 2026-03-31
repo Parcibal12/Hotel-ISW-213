@@ -1,7 +1,8 @@
 import express from 'express';
-import { createCheckin } from '../controllers/checkinController.js';
+import { realizarCheckin } from '../controllers/checkinController.js';
 
 const router = express.Router();
-router.post('/', createCheckin);
+
+router.post('/', realizarCheckin);
 
 export default router;

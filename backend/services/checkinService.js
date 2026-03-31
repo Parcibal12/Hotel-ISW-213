@@ -1,11 +1,20 @@
-import { crearCheckin } from '../repositories/checkinRepository.js';
+import { obtenerDatosReservaParaCheckin, registrarCheckinBD, marcarReservaEnCurso } from '../repositories/checkinRepository.js';
 
-export const registrarCheckin = async (datosCheckin) => {
-    const { reserva_id, nombre_completo, documento_identidad } = datosCheckin;
+export const procesarCheckin = async (reservaId) => {
+    if (!reservaId) throw new Error('ID de reserva no proporcionado');
 
-    if (!reserva_id || !nombre_completo || !documento_identidad) {
-        throw new Error('Faltan datos para el check-in');
+    const reserva = await obtenerDatosReservaParaCheckin(reservaId);
+    if (!reserva) throw new Error('La reserva no existe');
+
+    if (reserva.estado === 'Cancelada' || reserva.estado === 'Finalizada') {
+        throw new Error(`Operación denegada: La reserva está ${reserva.estado}`);
+    }
+    if (reserva.estado === 'EnCurso') {
+        throw new Error('Doble Check-In denegado: El huésped ya está en el hotel');
     }
 
-    return await crearCheckin(datosCheckin);
+    const nuevoCheckin = await registrarCheckinBD(reserva.reserva_id, reserva.nombre_completo, reserva.documento_identidad);
+    await marcarReservaEnCurso(reserva.reserva_id);
+
+    return nuevoCheckin;
 };

@@ -17,9 +17,14 @@ export const generarHtmlReservas = (huespedes, tiposHabitacion, reservas = []) =
                 <td><p class="text-sm">${new Date(r.fecha_ingreso).toLocaleDateString()}</p></td>
                 <td><p class="text-sm">${new Date(r.fecha_salida).toLocaleDateString()}</p></td>
                 <td><span class="status-btn ${r.estado === 'Pendiente' ? 'warning' : 'primary'}-btn">${r.estado}</span></td>
+                <td>
+                    ${r.estado === 'Pendiente'
+                ? `<button class="main-btn success-btn btn-hover btn-sm btn-checkin" data-id="${r.id}">Check-In</button>`
+                : `<span class="text-muted text-sm">-</span>`}
+                </td>
             </tr>
         `).join('')
-        : '<tr><td colspan="5" class="text-center text-muted py-4">No hay reservas activas ni futuras registradas en el sistema.</td></tr>';
+        : '<tr><td colspan="6" class="text-center text-muted py-4">No hay reservas activas ni futuras registradas en el sistema.</td></tr>';
 
     return `
         <div class="title-wrapper pt-30">
@@ -115,6 +120,7 @@ export const generarHtmlReservas = (huespedes, tiposHabitacion, reservas = []) =
                             <th><h6>Ingreso</h6></th>
                             <th><h6>Salida</h6></th>
                             <th><h6>Estado</h6></th>
+                            <th><h6>Acciones</h6></th>
                         </tr>
                     </thead>
                     <tbody>

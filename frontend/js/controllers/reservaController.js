@@ -2,6 +2,7 @@ import { getHuespedes } from '../api/huespedApi.js';
 import { getHabitacionesPorTipo, getTiposHabitacion } from '../api/habitacionApi.js';
 import { crearReserva, getReservas } from '../api/reservaApi.js';
 import { generarHtmlReservas } from '../views/reservasView.js';
+import { crearCheckin } from '../api/checkinApi.js';
 
 export const cargarControladorReservas = async (contenedor) => {
     const [huespedes, tiposHabitacion, reservas] = await Promise.all([
@@ -80,6 +81,34 @@ export const cargarControladorReservas = async (contenedor) => {
 
         } catch (error) {
             Swal.fire('No se pudo reservar', error.message, 'error');
+        }
+    });
+
+    contenedor.addEventListener('click', async (e) => {
+        const btnCheckin = e.target.closest('.btn-checkin');
+
+        if (btnCheckin) {
+            const reservaId = btnCheckin.getAttribute('data-id');
+
+            const confirmacion = await Swal.fire({
+                title: 'Confirmar llegada?',
+                text: 'El estado de la reserva cambiará a "En Curso".',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#219653',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, registrar'
+            });
+
+            if (confirmacion.isConfirmed) {
+                try {
+                    await crearCheckin(reservaId);
+                    Swal.fire('Ingreso Registrado', 'El check-in se guardó en la base de datos', 'success');
+                    await cargarControladorReservas(contenedor);
+                } catch (error) {
+                    Swal.fire('No se pudo registrar', error.message, 'error');
+                }
+            }
         }
     });
 };
