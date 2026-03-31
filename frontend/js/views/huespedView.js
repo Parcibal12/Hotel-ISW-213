@@ -5,6 +5,11 @@ export const generarHtmlHuespedes = (huespedes) => {
             <td><p class="text-sm">${h.documento_identidad}</p></td>
             <td><p class="text-sm">${h.correo}</p></td>
             <td><p class="text-sm">${h.telefono}</p></td>
+            <td>
+                <button class="main-btn info-btn btn-hover btn-sm btn-ver-huesped" data-id="${h.id}">
+                    Ver Perfil
+                </button>
+            </td>
         </tr>
     `).join('');
 
@@ -41,10 +46,46 @@ export const generarHtmlHuespedes = (huespedes) => {
             <h6 class="mb-25">Lista de Huéspedes</h6>
             <div class="table-wrapper table-responsive">
                 <table class="table">
-                    <thead><tr><th>Nombre</th><th>Documento</th><th>Correo</th><th>Teléfono</th></tr></thead>
-                    <tbody>${filas.length > 0 ? filas : '<tr><td colspan="4" class="text-center">No hay huéspedes</td></tr>'}</tbody>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>${filas.length > 0 ? filas : '<tr><td colspan="5" class="text-center">No hay huéspedes</td></tr>'}</tbody>
                 </table>
             </div>
+        </div>
+    `;
+};
+
+
+export const generarHtmlDetalleHuesped = (huesped) => {
+    return `
+        <div class="table-wrapper table-responsive mt-3">
+            <table class="table table-striped" style="text-align: left;">
+                <tbody>
+                    <tr>
+                        <th><h6 class="text-sm text-medium">Nombre:</h6></th>
+                        <td><p class="text-sm">${huesped.nombre_completo}</p></td>
+                    </tr>
+                    <tr>
+                        <th><h6 class="text-sm text-medium">Documento:</h6></th>
+                        <td><p class="text-sm">${huesped.tipo_documento} - ${huesped.documento_identidad}</p></td>
+                    </tr>
+                    <tr>
+                        <th><h6 class="text-sm text-medium">Teléfono:</h6></th>
+                        <td><p class="text-sm">${huesped.telefono}</p></td>
+                    </tr>
+                    <tr>
+                        <th><h6 class="text-sm text-medium">Correo:</h6></th>
+                        <td><p class="text-sm">${huesped.correo}</p></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     `;
 };

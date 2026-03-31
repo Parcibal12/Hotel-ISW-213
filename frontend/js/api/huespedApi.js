@@ -26,3 +26,15 @@ export const crearHuesped = async (datos) => {
     if (!respuesta.ok) throw new Error(data.error || 'Error al guardar');
     return data;
 };
+
+export const getHuespedById = async (id) => {
+    try {
+        const respuesta = await fetch(`${BASE_URL}/huespedes/detalle/${id}`);
+        const data = await respuesta.json();
+
+        if (!respuesta.ok) throw new Error(data.error || 'Error al obtener el huesped');
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};

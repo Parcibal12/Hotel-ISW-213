@@ -1,5 +1,5 @@
-import { getHuespedes, crearHuesped } from "../api/huespedApi.js";
-import { generarHtmlHuespedes } from "../views/huespedView.js";
+import { getHuespedes, crearHuesped, getHuespedById } from "../api/huespedApi.js";
+import { generarHtmlHuespedes, generarHtmlDetalleHuesped } from "../views/huespedView.js";
 
 export const cargarControladorHuespedes = async (contenedor) => {
     const huespedes = await getHuespedes();
@@ -7,6 +7,7 @@ export const cargarControladorHuespedes = async (contenedor) => {
     contenedor.innerHTML = generarHtmlHuespedes(huespedes);
 
     const form = document.getElementById('form-huesped');
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -16,7 +17,7 @@ export const cargarControladorHuespedes = async (contenedor) => {
             correo: document.getElementById('correo').value,
             telefono: document.getElementById('telefono').value,
             tipo_documento_id: document.getElementById('tipo_doc').value
-        }
+        };
 
         try {
             await crearHuesped(nuevoHuesped);
@@ -40,4 +41,26 @@ export const cargarControladorHuespedes = async (contenedor) => {
         }
     });
 
+    contenedor.addEventListener('click', async (e) => {
+        const btnVer = e.target.closest('.btn-ver-huesped');
+
+        if (btnVer) {
+            const huespedId = btnVer.getAttribute('data-id');
+
+            try {
+                const huesped = await getHuespedById(huespedId);
+
+                Swal.fire({
+                    title: '<h4 class="text-primary">Información del huésped</h4>',
+                    html: generarHtmlDetalleHuesped(huesped),
+                    confirmButtonText: 'Cerrar',
+                    confirmButtonColor: '#365CF5',
+                    width: '500px'
+                });
+
+            } catch (error) {
+                Swal.fire('Error en la consulta', error.message, 'warning');
+            }
+        }
+    });
 };
