@@ -2,16 +2,16 @@
 
 [![Repositorio](https://img.shields.io/badge/GitHub-Ver_Repositorio-181717?logo=github&style=for-the-badge)](https://github.com/Parcibal12/Hotel-ISW-213)
 
-[cite_start]Prototipo funcional de un sistema de reservas para un hotel pequeño, desarrollado como proyecto académico para la materia de Taller de Diseño de Software 1[cite: 3].
+Prototipo funcional de un sistema de reservas para un hotel pequeño, desarrollado como proyecto académico para la materia de Taller de Diseño de Software 1.
 
-[cite_start]Este sistema sistematiza la operación básica de hospedaje, permitiendo registrar huéspedes, gestionar reservas, controlar la ocupación y realizar el check-in, resolviendo la necesidad de control manual desordenado[cite: 128, 129].
+Este sistema sistematiza la operación básica de hospedaje, permitiendo registrar huéspedes, gestionar reservas, controlar la ocupación y realizar el check-in, resolviendo la necesidad de control manual desordenado.
 
 ## Arquitectura del sistema
 
-[cite_start]El proyecto está construido bajo el patrón arquitectónico **MVC (Modelo-Vista-Controlador)**[cite: 132], dividiendo claramente las responsabilidades:
+El proyecto está construido bajo el patrón arquitectónico **MVC (Modelo-Vista-Controlador)**, dividiendo claramente las responsabilidades:
 
-* [cite_start]**Frontend (Presentación):** Desarrollado en **Vanilla JS**[cite: 156], HTML5 y CSS3, utilizando la plantilla corporativa PlainAdmin y SweetAlert2 para interacciones controladas. Se comunica con el backend mediante `fetch` API.
-* **Backend (Control, Servicios, Repositorio):** API RESTful desarrollada en **Node.js** con **Express**. [cite_start]Implementa los patrones de diseño *Repository* (para abstracción de base de datos) y *Service* (para lógica de negocio y validaciones)[cite: 154].
+* **Frontend (Presentación):** Desarrollado en **Vanilla JS**, HTML5 y CSS3, utilizando la plantilla corporativa PlainAdmin y SweetAlert2 para interacciones controladas. Se comunica con el backend mediante `fetch` API.
+* **Backend (Control, Servicios, Repositorio):** API RESTful desarrollada en **Node.js** con **Express**. Implementa los patrones de diseño *Repository* (para abstracción de base de datos) y *Service* (para lógica de negocio y validaciones).
 * **Base de datos (Modelos y Persistencia):** Base de datos relacional alojada en la nube mediante **Supabase (PostgreSQL)**, conectada a través de la librería `pg` con manejo de pool de conexiones tolerante a fallos.
 
 ## Modelo de base de datos
@@ -23,13 +23,13 @@ La persistencia de datos está estructurada en las siguientes tablas relacionale
 * `habitacion`: Instancias físicas de los cuartos, relacionadas a un tipo específico.
 * `reserva`: Tabla transaccional central. Relaciona un huésped, una habitación, un rango de fechas, la cantidad de personas y el estado actual (`Pendiente`, `EnCurso`, `Cancelada`, `Finalizada`).
 * `checkin`: Registro histórico de la llegada física del huésped al hotel, vinculada a una reserva.
-* [cite_start]`servicio_hotel`: Directorio de contactos internos (Dato precargado de solo lectura)[cite: 174].
+* `servicio_hotel`: Directorio de contactos internos (Dato precargado de solo lectura).
 
-[cite_start]*Nota: Las capacidades de habitaciones y contactos de servicios son datos precargados para acotar el alcance del prototipo[cite: 171].*
+*Nota: Las capacidades de habitaciones y contactos de servicios son datos precargados para acotar el alcance del prototipo.*
 
 ## Estructura del proyecto
 
-[cite_start]El código fuente está ordenado respetando la separación de capas[cite: 185]:
+El código fuente está ordenado respetando la separación de capas:
 
 ```text
 /Hotel
@@ -55,19 +55,19 @@ La persistencia de datos está estructurada en las siguientes tablas relacionale
 
 ## Funcionalidades implementadas
 
-[cite_start]El prototipo cubre el 100% de las historias de usuario (HU) base y la asignación individual requerida[cite: 188]:
+El prototipo cubre el 100% de las historias de usuario (HU) base y la asignación individual requerida:
 
-* [cite_start]**HU-01:** Registrar huésped (con validación de campos y prevención de duplicados)[cite: 20, 21, 22].
-* [cite_start]**HU-02:** Crear reserva de habitación (con control de fechas lógicas, prevención de solapamiento de cuartos y límite de capacidad)[cite: 28, 29, 30, 31].
-* [cite_start]**HU-03:** Consultar reservas activas y futuras (listado ordenado cronológicamente)[cite: 39, 40].
-* [cite_start]**HU-04:** Registrar check-in (previniendo acción sobre reservas canceladas/finalizadas y evitando doble check-in)[cite: 48, 49, 50].
-* [cite_start]**HU-05:** Gestionar variación de tipo de habitación en la reserva (despliegue de características dinámicas al seleccionar)[cite: 60, 62, 63].
-* [cite_start]**HU-06:** Visualizar contactos de servicios del hotel (directorio de solo lectura)[cite: 73, 74].
-* [cite_start]**HU-10 (asignación individual):** Consultar información de un huésped (modal de detalles con comportamiento controlado ante errores/IDs inexistentes)[cite: 113, 116].
+* **HU-01:** Registrar huésped (con validación de campos y prevención de duplicados).
+* **HU-02:** Crear reserva de habitación (con control de fechas lógicas, prevención de solapamiento de cuartos y límite de capacidad).
+* **HU-03:** Consultar reservas activas y futuras (listado ordenado cronológicamente).
+* **HU-04:** Registrar check-in (previniendo acción sobre reservas canceladas/finalizadas y evitando doble check-in).
+* **HU-05:** Gestionar variación de tipo de habitación en la reserva (despliegue de características dinámicas al seleccionar).
+* **HU-06:** Visualizar contactos de servicios del hotel (directorio de solo lectura).
+* **HU-10 (asignación individual):** Consultar información de un huésped (modal de detalles con comportamiento controlado ante errores/IDs inexistentes).
 
 ## Instrucciones de ejecución
 
-[cite_start]Seguir los siguientes pasos para levantar el proyecto localmente[cite: 189]:
+Seguir los siguientes pasos para levantar el proyecto localmente:
 
 ### Requisitos previos
 * Tener instalado [Node.js](https://nodejs.org/) (v16 o superior).
