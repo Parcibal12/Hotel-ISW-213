@@ -1,5 +1,7 @@
 import { crearReserva, obtenerTodasLasReservas, actualizarEstadoReserva, verificarDisponibilidad, obtenerCapacidadHabitacion } from "../repositories/reservaRepository.js";
 
+const ESTADOS_PERMITIDOS = ['Pendiente', 'Confirmada', 'Cancelada', 'EnCurso', 'Finalizada'];
+
 export const registrarReserva = async (datosReserva) => {
     const { huesped_id, habitacion_id, fecha_ingreso, fecha_salida, cantidad_personas } = datosReserva;
 
@@ -41,9 +43,7 @@ export const listarReservas = async () => {
 
 
 export const cambiarEstadoReserva = async (id, nuevoEstado) => {
-    const estadosPermitidos = ['Pendiente', 'Confirmada', 'Cancelada', 'EnCurso', 'Finalizada'];
-
-    if (!estadosPermitidos.includes(nuevoEstado)) {
+    if (!ESTADOS_PERMITIDOS.includes(nuevoEstado)) {
         throw new Error('Estado inválido');
     }
 
