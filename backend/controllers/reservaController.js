@@ -34,7 +34,7 @@ export const obtenerReservas = async (req, res) => {
         const reservas = await listarReservas();
         res.status(200).json(reservas);
     } catch (error) {
-        if (error.message == 'No hay reservas') {
+        if (error.message === 'No hay reservas') {
             return res.status(404).json({ mensaje: 'No hay reservas en el sistema' });
 
         }
