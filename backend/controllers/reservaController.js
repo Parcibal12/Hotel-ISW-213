@@ -1,5 +1,7 @@
 import { registrarReserva, listarReservas, cambiarEstadoReserva } from "../services/reservaServices.js";
 
+const MENSAJE_ERROR_500 = 'Error interno del servidor';
+
 export const crearReserva = async (req, res) => {
     try {
         const nuevaReserva = await registrarReserva(req.body);
@@ -23,7 +25,7 @@ export const crearReserva = async (req, res) => {
         }
 
         console.error('Error al crear reserva: ', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: MENSAJE_ERROR_500 });
     }
 };
 
@@ -37,7 +39,7 @@ export const obtenerReservas = async (req, res) => {
 
         }
 
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: MENSAJE_ERROR_500 });
 
     }
 };
@@ -58,6 +60,6 @@ export const actualizarEstadoReserva = async (req, res) => {
             return res.status(404).json({ error: 'No se encontró la reserva' });
         }
         console.error('Error al actualizar estado:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: MENSAJE_ERROR_500 });
     }
 };
