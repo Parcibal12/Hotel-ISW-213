@@ -63,6 +63,16 @@ export const generarHtmlHuespedes = (huespedes) => {
 };
 
 export const generarHtmlDetalleHuesped = (huesped) => {
+    let reservasHtml = '<p class="text-sm text-muted">No tiene reservas activas actualmente.</p>';
+
+    if (huesped.reservas_activas && huesped.reservas_activas.length > 0) {
+        const listaBulletPoints = huesped.reservas_activas.map(reserva =>
+            `<li>${reserva.tipo_habitacion} - $${reserva.precio} (Estado: ${reserva.estado})</li>`
+        ).join('');
+
+        reservasHtml = `<ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 0;" class="text-sm">${listaBulletPoints}</ul>`;
+    }
+
     return `
         <div class="table-wrapper table-responsive mt-3">
             <table class="table table-striped" style="text-align: left;">
@@ -82,6 +92,10 @@ export const generarHtmlDetalleHuesped = (huesped) => {
                     <tr>
                         <th><h6 class="text-sm text-medium">Correo:</h6></th>
                         <td><p class="text-sm">${huesped.correo}</p></td>
+                    </tr>
+                    <tr>
+                        <th><h6 class="text-sm text-medium text-primary">Reservas Activas:</h6></th>
+                        <td>${reservasHtml}</td>
                     </tr>
                 </tbody>
             </table>

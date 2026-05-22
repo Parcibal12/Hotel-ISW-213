@@ -1,10 +1,10 @@
 import express from 'express';
-import { createReserva, getReservas, actualizarEstadoReserva } from '../controllers/reservaController.js';
+import { crearReserva, obtenerReservas, actualizarEstadoReserva } from '../controllers/reservaController.js';
 
 const router = express.Router();
 
-router.post('/', createReserva);
-router.get('/', getReservas);
+router.post('/', crearReserva);
+router.get('/', obtenerReservas);
 router.patch('/:id/estado', actualizarEstadoReserva);
 
 export default router;

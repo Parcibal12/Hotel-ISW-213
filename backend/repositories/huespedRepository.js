@@ -37,13 +37,27 @@ export const obtenerHuespedes = async () => {
 };
 
 export const obtenerHuespedPorId = async (id) => {
-    const query = `
+    const queryHuesped = `
         SELECT h.id, h.nombre_completo, h.documento_identidad, h.telefono, h.correo, td.nombre as tipo_documento
         FROM public.huesped h
         JOIN public.tipo_documento td ON h.tipo_documento_id = td.id
         WHERE h.id = $1;
     `;
+    const resultado = await pool.query(queryHuesped, [id]);
+    const huesped = resultado.rows.length > 0 ? resultado.rows[0] : null;
 
-    const resultado = await pool.query(query, [id]);
-    return resultado.rows.length > 0 ? resultado.rows[0] : null;
-}
+    if (huesped) {
+        const queryReservas = `
+            SELECT r.estado, th.nombre_tipo as tipo_habitacion, th.precio_referencial as precio
+            FROM public.reserva r
+            JOIN public.habitacion hab ON r.habitacion_id = hab.id
+            JOIN public.tipo_habitacion th ON hab.tipo_habitacion_id = th.id
+            WHERE r.huesped_id = $1 AND r.estado NOT IN ('Cancelada', 'Finalizada');
+        `;
+        const reservasResultado = await pool.query(queryReservas, [id]);
+
+        huesped.reservas_activas = reservasResultado.rows;
+    }
+
+    return huesped;
+};

@@ -1,6 +1,6 @@
 import { registrarReserva, listarReservas, cambiarEstadoReserva } from "../services/reservaServices.js";
 
-export const createReserva = async (req, res) => {
+export const crearReserva = async (req, res) => {
     try {
         const nuevaReserva = await registrarReserva(req.body);
         res.status(201).json({ mensaje: 'Reserva creada con éxito', reserva: nuevaReserva });
@@ -27,7 +27,7 @@ export const createReserva = async (req, res) => {
     }
 };
 
-export const getReservas = async (req, res) => {
+export const obtenerReservas = async (req, res) => {
     try {
         const reservas = await listarReservas();
         res.status(200).json(reservas);
