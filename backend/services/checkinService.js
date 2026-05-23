@@ -1,6 +1,6 @@
 import { obtenerDatosReservaParaCheckin, registrarCheckinBD, marcarReservaEnCurso } from '../repositories/checkinRepository.js';
 
-const validarEstadoReserva = (reserva) => {
+export const validarEstadoReserva = (reserva) => {
     if (reserva.estado === 'Cancelada' || reserva.estado === 'Finalizada') {
         throw new Error(`Operación denegada: La reserva está ${reserva.estado}`);
     }
