@@ -19,8 +19,14 @@ export const registrarReserva = async (datosReserva) => {
     if (!capacidadMaxima) {
         throw new Error('Habitación no existe');
     }
-    const personas = cantidad_personas || 1;
-    if (personas > capacidadMaxima) {
+
+    const totalPersonas = cantidad_personas ?? 1;
+
+    if (totalPersonas <= 0) {
+        throw new Error('Cantidad de personas inválida');
+    }
+
+    if (totalPersonas > capacidadMaxima) {
         throw new Error('Capacidad excedida');
     }
 
@@ -40,7 +46,7 @@ export const listarReservas = async () => {
 
     reservas.sort((reservaAntigua, reservaReciente) => 
         new Date(reservaAntigua.fecha_ingreso) - new Date(reservaReciente.fecha_ingreso)
-    
+
     );
 
 
