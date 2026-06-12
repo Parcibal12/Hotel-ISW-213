@@ -2,6 +2,11 @@ import { crearReserva, obtenerTodasLasReservas, actualizarEstadoReserva, verific
 
 const ESTADOS_PERMITIDOS = ['Pendiente', 'Confirmada', 'Cancelada', 'EnCurso', 'Finalizada'];
 
+const validarCapacidadPersonas = (personas, maximo) => {
+    if (personas <= 0) throw new Error('Cantidad de personas inválida');
+    if (personas > maximo) throw new Error('Capacidad excedida');
+};
+
 export const registrarReserva = async (datosReserva) => {
     const { huesped_id, habitacion_id, fecha_ingreso, fecha_salida, cantidad_personas } = datosReserva;
 
@@ -22,13 +27,7 @@ export const registrarReserva = async (datosReserva) => {
 
     const totalPersonas = cantidad_personas ?? 1;
 
-    if (totalPersonas <= 0) {
-        throw new Error('Cantidad de personas inválida');
-    }
-
-    if (totalPersonas > capacidadMaxima) {
-        throw new Error('Capacidad excedida');
-    }
+    validarCapacidadPersonas(totalPersonas, capacidadMaxima);
 
     const estaOcupada = await verificarDisponibilidad(habitacion_id, fecha_ingreso, fecha_salida);
     if (estaOcupada) {
