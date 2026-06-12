@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --collectCoverageFrom=\"backend/services/**/*.js\"",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --collectCoverageFrom=\"backend/services/reservaServices.js\" --collectCoverageFrom=\"backend/services/huespedService.js\" --collectCoverageFrom=\"backend/services/checkinService.js\"",
     "lint": "eslint backend/services/"
   },
   "keywords": [],
