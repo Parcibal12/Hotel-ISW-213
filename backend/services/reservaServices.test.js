@@ -1,13 +1,11 @@
 import { jest } from '@jest/globals';
 
-// 1. Declarar TODOS los mocks ANTES de importar el servicio
 const mockObtenerCapacidadHabitacion = jest.fn();
 const mockVerificarDisponibilidad = jest.fn();
 const mockCrearReserva = jest.fn();
-const mockObtenerTodasLasReservas = jest.fn(); // Agregado para calmar a Jest
-const mockActualizarEstadoReserva = jest.fn(); // Agregado para calmar a Jest
+const mockObtenerTodasLasReservas = jest.fn(); 
+const mockActualizarEstadoReserva = jest.fn();
 
-// 2. Mockear el módulo completo
 jest.unstable_mockModule('../repositories/reservaRepository.js', () => ({
     obtenerCapacidadHabitacion: mockObtenerCapacidadHabitacion,
     verificarDisponibilidad: mockVerificarDisponibilidad,
@@ -16,8 +14,7 @@ jest.unstable_mockModule('../repositories/reservaRepository.js', () => ({
     actualizarEstadoReserva: mockActualizarEstadoReserva
 }));
 
-// 3. Importar dinámicamente el servicio a probar
-const { registrarReserva } = await import('./reservaServices.js');
+const { registrarReserva, listarReservas } = await import('./reservaServices.js');
 
 describe('HU-02: Crear reserva de habitación', () => {
 
@@ -58,5 +55,26 @@ describe('HU-02: Crear reserva de habitación', () => {
         mockObtenerCapacidadHabitacion.mockResolvedValue(2); 
         
         await expect(registrarReserva(reserva)).rejects.toThrow('Capacidad excedida');
+    });
+});
+
+
+describe('HU-03: consultar reservas activas y futuras', () => {
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test('CA 2: Debe devolver las reservas ordenadas cronológicamente por fecha de ingreso', async () => {
+        const reservasDesordenadas = [
+            { id: 1, fecha_ingreso: '2026-12-10T00:00:00Z' },
+            { id: 2, fecha_ingreso: '2026-01-05T00:00:00Z' }
+        ];        
+        mockObtenerTodasLasReservas.mockResolvedValue(reservasDesordenadas);
+        const resultado = await listarReservas();
+
+        expect(resultado[0].id).toBe(2);
+        expect(resultado[1].id).toBe(1);
+
     });
 });
