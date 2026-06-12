@@ -35,8 +35,8 @@ export const listarHuespedes = async () => {
 
 export const consultarHuesped = async (id) => {
     const huesped = await obtenerHuespedPorId(id);
-    if (!huesped) {
-        throw new Error('El huespued no existe en la base de datos');
-    }
+    // if (!huesped) {
+    //     throw new Error('El huespued no existe en la base de datos');
+    // }
     return huesped;
 }
