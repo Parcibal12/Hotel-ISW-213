@@ -34,10 +34,13 @@ export const registrarReserva = async (datosReserva) => {
 
 export const listarReservas = async () => {
     const reservas = await obtenerTodasLasReservas();
+
     if (!reservas || reservas.length === 0) {
         throw new Error('No hay reservas');
+
     }
 
+    reservas.sort((a, b) => new Date(a.fecha_ingreso) - new Date(b.fecha_ingreso));
     return reservas;
 };
 
