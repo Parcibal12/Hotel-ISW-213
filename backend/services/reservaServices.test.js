@@ -56,6 +56,21 @@ describe('HU-02: Crear reserva de habitación', () => {
         
         await expect(registrarReserva(reserva)).rejects.toThrow('Capacidad excedida');
     });
+
+    test('CA 4: Debe rechazar la reserva si la cantidad de personas es cero o negativa', async () => {
+        const reservaInvalida = { 
+            huesped_id: 1, 
+            habitacion_id: 101, 
+            fecha_ingreso: '2026-06-01', 
+            fecha_salida: '2026-06-05', 
+            cantidad_personas: -2 
+        };
+        
+        mockObtenerCapacidadHabitacion.mockResolvedValue(4);
+        mockVerificarDisponibilidad.mockResolvedValue(false);
+
+        await expect(registrarReserva(reservaInvalida)).rejects.toThrow('cantidad de personas inválida');
+    });
 });
 
 
