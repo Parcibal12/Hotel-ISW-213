@@ -1,0 +1,31 @@
+name: Pipeline de CI/CD para Hotel-API
+
+on:
+  push:
+    branches: [ "examen-cloud" ]
+  pull_request:
+    branches: [ "examen-cloud" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar Pruebas Unitarias
+        run: npm test
+
+      - name: Build Docker Image
+        run: docker build -t hotel-backend:latest .
+
