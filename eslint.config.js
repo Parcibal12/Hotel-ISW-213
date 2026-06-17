@@ -1,7 +1,20 @@
 import js from "@eslint/js";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.es2021
+      }
+    },
+    rules: {
+      "no-console": "off",
+      "no-unused-vars": "warn"
+    }
+  },
   {
     files: ["backend/services/*.js"],
     ignores: ["backend/services/*.test.js"],
@@ -28,15 +41,7 @@ export default [
     files: ["**/*.test.js"],
     languageOptions: {
       globals: {
-        describe: "readonly",
-        test: "readonly",
-        it: "readonly",
-        expect: "readonly",
-        beforeEach: "readonly",
-        afterEach: "readonly",
-        beforeAll: "readonly",
-        afterAll: "readonly",
-        jest: "readonly"
+        ...globals.jest
       }
     },
     rules: {}
