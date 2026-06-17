@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://hotel-isw-213.onrender.com/api';
+export const BASE_URL = 'http://98.88.248.26:32724/api';
