@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hotel-backend-deployment
+  labels:
+    app: hotel-backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hotel-backend
@@ -14,7 +16,8 @@ spec:
     spec:
       containers:
       - name: hotel-backend
-        image: tu-usuario-github/hotel-backend:latest
+        image: parcibalnomas/hotel-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
@@ -23,26 +26,20 @@ spec:
             secretKeyRef:
               name: hotel-secrets
               key: SUPABASE_URL
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
 ---
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+apiVersion: v1
+kind: Service
 metadata:
-  name: hotel-hpa
+  name: hotel-backend-service
 spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: hotel-backend-deployment
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
+  selector:
+    app: hotel-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
