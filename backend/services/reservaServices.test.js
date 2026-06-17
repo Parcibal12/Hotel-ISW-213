@@ -69,7 +69,7 @@ describe('HU-02: Crear reserva de habitación', () => {
         mockObtenerCapacidadHabitacion.mockResolvedValue(4);
         mockVerificarDisponibilidad.mockResolvedValue(false);
 
-        await expect(registrarReserva(reservaInvalida)).rejects.toThrow('cantidad de personas inválida');
+        await expect(registrarReserva(reservaInvalida)).rejects.toThrow('Cantidad de personas inválida');
     });
 });
 
